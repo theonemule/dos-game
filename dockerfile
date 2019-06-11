@@ -14,7 +14,7 @@ RUN apt-get update && \
 	echo $PASSWORD | vncpasswd -f > ~/.vnc/passwd && \
 	chmod 0600 ~/.vnc/passwd && \
 	echo "set border 0" > ~/.ratpoisonrc  && \
-	echo "exec dosbox -conf ~/.dosbox/dosbox.conf -fullscreen -c 'MOUNT C: /mnt/data/dos' -c 'C:' -c 'cd keen' -c 'keen1'">> ~/.ratpoisonrc && \
+	echo "exec dosbox -conf ~/.dosbox/dosbox.conf -fullscreen -c 'MOUNT C: /dos' -c 'C:' -c 'cd keen' -c 'keen1'">> ~/.ratpoisonrc && \
 	export DOSCONF=$(dosbox -printconf) && \
 	cp $DOSCONF ~/.dosbox/dosbox.conf && \
 	sed -i 's/usescancodes=true/usescancodes=false/' ~/.dosbox/dosbox.conf && \
