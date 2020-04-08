@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "blaizek8s"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "blaizek8s"
+    spec:
+      containers:
+        - name: "blaizek8s"
+          image: "blaizek8s.azurecr.io/blaizek8s"
+          ports:
+          - containerPort: 80
