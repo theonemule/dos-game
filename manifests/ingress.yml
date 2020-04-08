@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "blaizek8s"
+    labels:
+        app: "blaizek8s"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: blaizek8sf3b1-blaizek8s.212d8f9fd111430db5d8.eastus2.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "blaizek8s"
+                servicePort: 80
