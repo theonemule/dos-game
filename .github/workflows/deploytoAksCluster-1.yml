@@ -42,8 +42,7 @@ jobs:
       with:
         namespace: blaizek8s2559
         manifests: |
-          manifests/deployment-1.yml
-          manifests/service-1.yml
+          keen.yml        
         images: |
           blaizek8s.azurecr.io/blaizek8s:${{ github.sha }}
         imagepullsecrets: |
