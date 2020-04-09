@@ -3,7 +3,7 @@ ENV USER=root
 ENV PASSWORD=password1
 ENV DEBIAN_FRONTEND=noninteractive 
 ENV DEBCONF_NONINTERACTIVE_SEEN=true
-# COPY keen /dos/keen
+COPY keen /dos/keen
 RUN apt-get update && \
 	echo "tzdata tzdata/Areas select America" > ~/tx.txt && \
 	echo "tzdata tzdata/Zones/America select New York" >> ~/tx.txt && \
