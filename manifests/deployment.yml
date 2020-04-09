@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "k8s"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "k8s"
+    spec:
+      containers:
+        - name: "k8s"
+          image: "blaizek8s.azurecr.io/k8s"
+          ports:
+          - containerPort: 80
