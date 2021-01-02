@@ -85,7 +85,7 @@ spec:
       - name: master
         image: blaize/keen
         ports:
-        - containerPort: 6080
+        - containerPort: 80
 ````
 
 To connect use this, first create a file called keen.yaml file, configure your instance kubectl to work with your instance of Kubernetes, then run deploy the sample.
