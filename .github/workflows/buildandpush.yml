@@ -6,7 +6,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         # checkout the repo
-        - name: 'Checkout GitHub Action'
+        - name: 'Buidld and Push to Azure Container Registry'
           uses: actions/checkout@main
           
       
