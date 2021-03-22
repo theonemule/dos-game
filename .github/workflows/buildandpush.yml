@@ -13,9 +13,9 @@ jobs:
         - name: 'Build and push image'
           uses: azure/docker-login@v1
           with:
-            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            username: ${{ secrets.REGISTRY_USERNAME }}
-            password: ${{ secrets.REGISTRY_PASSWORD }}
+            login-server: ${{ secrets.ACR_SERVER }}
+            username: ${{ secrets.ACR_USER }}
+            password: ${{ secrets.ACR_PASSWORD }}
         - run: |
-            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/keengithub
-            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/keengithub
+            docker build . -t ${{ secrets.ACR_SERVER }}/keengithub
+            docker push ${{ secrets.ACR_SERVER }}/keengithub
