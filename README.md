@@ -39,11 +39,11 @@ CMD vncserver && websockify -D --web=/usr/share/novnc/ --cert=~/novnc.pem 80 loc
   ````
 1. Run the image.
   ```` 
-   docker run -p 6080:6080 dosbox
+   docker run -p 6080:80 mydosbox
    ````
    
 1. Open a browser and point it to http://localhost:6080/vnc.html
-1. You should see a prompt for the password. Type it in, and you should be able to connect to your container with DosBox running. You can now use the command prompt to start your games.
+1. You should see a prompt for the password. Type it in, and you should be able to connect to your container with DosBox running. The game is started automatically.
 1. Once your image is built, you can push it to your image repository with docker push, but you’ll need to tag it appropriately.
 
 # USE WITH KUBERNETES
@@ -86,7 +86,7 @@ spec:
       - name: master
         image: blaize/keen
         ports:
-        - containerPort: 6080
+        - containerPort: 80
 ````
 
 To connect use this, first create a file called keen.yaml file, configure your instance kubectl to work with your instance of Kubernetes, then run deploy the sample.
