@@ -6,7 +6,7 @@
 
   ````
 
-FROM ubuntu:18.04
+FROM ubuntu:20.10
 ENV USER=root
 ENV PASSWORD=password1
 ENV DEBIAN_FRONTEND=noninteractive 
@@ -29,7 +29,8 @@ RUN apt-get update && \
 	openssl req -x509 -nodes -newkey rsa:2048 -keyout ~/novnc.pem -out ~/novnc.pem -days 3650 -subj "/C=US/ST=NY/L=NY/O=NY/OU=NY/CN=NY emailAddress=email@example.com"
 EXPOSE 80
 CMD vncserver && websockify -D --web=/usr/share/novnc/ --cert=~/novnc.pem 80 localhost:5901 && tail -f /dev/null
-  ````
+
+````
 
 1. Replace the COPY keen /dos/keen with your game (ie. COPY wolf3d /dos/wolf3d). 1. You can also change the default password, or override it with a -e parameter when you run the image.
 1. Now, with Docker, build the image. I’m assuming you already have Docker installed and are familiar with it to some extent. CD to the directory in a console and run the command…
