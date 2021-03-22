@@ -1,5 +1,7 @@
 # DOSBOX IN A CONTAINER WITH VNC CLIENT
 
+So much fun!
+
 1. Create a folder.
 1. Place a copy of your game in the folder. I am using the shareware version of Commander Keen here.
 1. In that folder, create a file called `dockerfile`, paste in the following code.
