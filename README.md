@@ -1,7 +1,5 @@
 # DOSBOX IN A CONTAINER WITH VNC CLIENT
 
-
-
 So much fun!
 
 1. Create a folder.
