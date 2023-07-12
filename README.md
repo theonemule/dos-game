@@ -1,41 +1,11 @@
 # DOSBOX IN A CONTAINER WITH VNC CLIENT
 
-So much fun!
+So much fun! After 3 years, I decided to bite the bullet and figure out how to add sound... and now it has it. I completely overhauled the Dockerfile to use Suerpvisor to start the processes because there were simply too many after adding support for sound. The rest of it is similar to the original, which is in an archive folder in this repo. In any case, I hope you enjoy it!
 
-1. Create a folder.
+1. Clone the repo: `git clone https://github.com/theonemule/dos-game.git`
 1. Place a copy of your game in the folder. I am using the shareware version of Commander Keen here.
-1. In that folder, create a file called `dockerfile`, paste in the following code.
-
-  ````
-
-FROM ubuntu:22.04
-ENV USER=root
-ENV PASSWORD=password1
-ENV DEBIAN_FRONTEND=noninteractive 
-ENV DEBCONF_NONINTERACTIVE_SEEN=true
-COPY keen /dos/keen
-RUN apt-get update && \
-	echo "tzdata tzdata/Areas select America" > ~/tx.txt && \
-	echo "tzdata tzdata/Zones/America select New York" >> ~/tx.txt && \
-	debconf-set-selections ~/tx.txt && \
-	apt-get install -y tightvncserver ratpoison dosbox novnc websockify && \
-	mkdir ~/.vnc/ && \
-	mkdir ~/.dosbox && \
-	echo $PASSWORD | vncpasswd -f > ~/.vnc/passwd && \
-	chmod 0600 ~/.vnc/passwd && \
-	echo "set border 0" > ~/.ratpoisonrc  && \
-	echo "exec dosbox -conf ~/.dosbox/dosbox.conf -fullscreen -c 'MOUNT C: /dos' -c 'C:' -c 'cd keen' -c 'keen1'">> ~/.ratpoisonrc && \
-	export DOSCONF=$(dosbox -printconf) && \
-	cp $DOSCONF ~/.dosbox/dosbox.conf && \
-	sed -i 's/usescancodes=true/usescancodes=false/' ~/.dosbox/dosbox.conf && \
-	openssl req -x509 -nodes -newkey rsa:2048 -keyout ~/novnc.pem -out ~/novnc.pem -days 3650 -subj "/C=US/ST=NY/L=NY/O=NY/OU=NY/CN=NY emailAddress=email@example.com"
-EXPOSE 80
-CMD vncserver && websockify -D --web=/usr/share/novnc/ --cert=~/novnc.pem 80 localhost:5901 && tail -f /dev/null
-
-````
-
-1. Replace the COPY keen /dos/keen with your game (ie. COPY wolf3d /dos/wolf3d). 1. You can also change the default password, or override it with a -e parameter when you run the image.
-1. Now, with Docker, build the image. I’m assuming you already have Docker installed and are familiar with it to some extent. CD to the directory in a console and run the command…
+1. Replace the `COPY keen /dos/keen` with your game (ie. COPY wolf3d /dos/wolf3d). 1. You can also change the default password or override it with a -e parameter when you run the image.
+1. Now, with Docker, build the image. I’m assuming you already have Docker installed and are somewhat familiar with it. CD to the directory in a console and run the command…
   ````
   docker build -t mydosbox .
   ````
@@ -49,11 +19,11 @@ CMD vncserver && websockify -D --web=/usr/share/novnc/ --cert=~/novnc.pem 80 loc
 1. Once your image is built, you can push it to your image repository with docker push, but you’ll need to tag it appropriately.
 
 # USE WITH KUBERNETES
-Kubernetes is another part of the equation when it comes to container apps. Containers on Kubernetes are deployed into pods, which are then usually a part of a part of a deployment, which will have one or more pods associated with it. Deployments can also be used for creating scalable sets of pods for high availability too on a Kubernetes cluster. If you’re not familiar with Kubernetes, check out this webinar below where I go in depth on the matter.
+Kubernetes is another part of the equation when it comes to container apps. Containers on Kubernetes are deployed into pods, which are then usually a part of a deployment with one or more pods associated. Deployments can also be used to create scalable sets of pods for high availability on a Kubernetes cluster. If you’re unfamiliar with Kubernetes, check out this webinar below, where I go in-depth.
 
-Deployments and services can be defined declaratively with a YAML file. Below is a Kuberenetes YAML file that defines a deployment and a service for my retro gaming container.
+Deployments and services can be defined declaratively with a YAML file. Below is a Kubernetes YAML file that defines a deployment and a service for my retro gaming container.
 
-The deployment is simple – it points to a single container image called blaize/keen and then tells Kubernetes what ports to expose for the container. The service defines how the deployment will be exposed on a network. In this case, it’s using a TCP load balancer, where it is exposing port 80 and mapping that to the port exposed by the deployment. The service uses selectors on the label app to match the service with the deployment.
+The deployment is simple – it points to a single container image called blaize/keen and then tells Kubernetes what ports to expose for the container. The service defines how the deployment will be exposed on a network. In this case, it’s using a TCP load balancer, exposing port 80 and mapping that to the port exposed by the deployment. The service uses selectors on the label app to match the service with the deployment.
 
 ````
 apiVersion: v1
@@ -91,7 +61,7 @@ spec:
         - containerPort: 80
 ````
 
-To connect use this, first create a file called keen.yaml file, configure your instance kubectl to work with your instance of Kubernetes, then run deploy the sample.
+To connect, use this, first create a file called keen.yaml file, configure your instance kubectl to work with your instance of Kubernetes, then run deploy the sample.
 
 ````
 kubectl create -f keen.yaml
