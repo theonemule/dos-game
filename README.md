@@ -1,4 +1,4 @@
-# DOSBOX IN A CONTAINER WITH VNC CLIENT
+# DOSBOX IN A CONTAINER WITH VNC CLIENT -- NOW WITH SOUND!
 
 So much fun! After 3 years, I decided to bite the bullet and figure out how to add sound... and now it has it. I completely overhauled the Dockerfile to use Suerpvisor to start the processes because there were simply too many after adding support for sound. The rest of it is similar to the original, which is in an archive folder in this repo. In any case, I hope you enjoy it!
 
