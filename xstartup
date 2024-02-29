@@ -1,0 +1,3 @@
+#!/bin/sh
+# Command to start DOSBox
+dosbox -conf ~/.dosbox/dosbox.conf -c "MOUNT C: /dos" -c 'C:' &

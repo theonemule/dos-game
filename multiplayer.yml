@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keenservice1
+  labels:
+    app: keenservice1
+spec:
+  ports:
+  - port: 80
+    targetPort: 80  
+    name: http
+  selector:
+    app: keen1
+  type: LoadBalancer  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keenipxservice1
+spec:
+  selector:
+    app: keen1
+  ports:
+    - protocol: UDP
+      port: 19900
+      targetPort: 19900
+  type: ClusterIP           
+  
+---
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: keen1
+spec:
+  selector:
+    matchLabels:
+      app: keen1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: keen1
+    spec:
+      containers:
+      - name: keen-kontainer
+        image: "blaize/keen"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keenservice2
+  labels:
+    app: keenservice2
+spec:
+  ports:
+  - port: 80
+    targetPort: 80  
+    name: http
+  selector:
+    app: keen2
+  type: LoadBalancer  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keenipxservice2
+spec:
+  selector:
+    app: keen2
+  ports:
+    - protocol: UDP
+      port: 19900
+      targetPort: 19900
+  type: ClusterIP           
+  
+---
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: keen2
+spec:
+  selector:
+    matchLabels:
+      app: keen2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: keen2
+    spec:
+      containers:
+      - name: keen-kontainer
+        image: "blaize/keen"
+        ports:
+        - containerPort: 80
