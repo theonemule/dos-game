@@ -28,7 +28,7 @@ COPY xstartup /root/.vnc/xstartup
 
 #Inject code for audio in the NoVNC client
 RUN sed -i "/import RFB/a \
-      import WebAudio from '/core/webaudio.js'" \
+      import WebAudio from '../core/webaudio.js'" \
     /usr/share/novnc/app/ui.js \
  && sed -i "/UI.rfb.resizeSession/a \
         var loc = window.location, new_uri; \
